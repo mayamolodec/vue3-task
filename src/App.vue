@@ -1,11 +1,16 @@
-<script setup></script>
+<script setup>
+
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+<div class="navbar navbar-expand-lg navbar-light bg-light">
+  <router-link to="/sales">Sales</router-link>
+  <router-link to="/incomes">Incomes</router-link>
+  <router-link to="/stocks">Stocks</router-link>
+  <router-link to="/orders">Orders</router-link>
+</div>
+<router-view />
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
