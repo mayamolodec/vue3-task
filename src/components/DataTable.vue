@@ -1,6 +1,6 @@
 <script setup>
-import { ref,computed } from 'vue';
-import DropDown from './DropDown.vue';
+import { ref,computed } from 'vue'
+import DropDown from './DropDown.vue'
 
 const props = defineProps({
     items:{
@@ -9,7 +9,7 @@ const props = defineProps({
     }
 })
 
-const rowsPerPage = 12;
+const rowsPerPage = 8;
 const currentPage = ref(1);
 const filteredValue = ref(null)
 
@@ -24,12 +24,7 @@ const paginatedRows = computed(() => {
     return filteredItems.value.slice(start, start+rowsPerPage)
 })
 
-const totalPages = computed(() => Math.ceil(filteredItems.value.length / rowsPerPage));
-
-const warehouseOptions = computed(()=> {
-    const names = props.items.map(item => item.warehouse_name)
-    return [...new Set(names)]
-})
+const totalPages = computed(() => Math.ceil(filteredItems.value.length / rowsPerPage))
 
 function goToPage(page){
     if (page >=1 && page <= totalPages.value) currentPage.value = page;

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+
 const props = defineProps({
     names:{
         type: Array,
@@ -26,7 +27,7 @@ const selectedItem = (name) =>{
     <li class="dropdown-item" @click="selectedItem('Warehouse filter')">
         Весь список
     </li>
-    <li class="dropdown-item" v-for="name in names" :key="name" @click="selectedItem(name)">
+    <li class="dropdown-item" v-for="name in props.names" :key="name" @click="selectedItem(name)">
         {{ name }}
     </li >
 
