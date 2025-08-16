@@ -1,5 +1,6 @@
 <script setup>
 import { ref,computed } from 'vue';
+import DropDown from './DropDown.vue';
 
 const props = defineProps({
     items:{
@@ -10,11 +11,24 @@ const props = defineProps({
 
 const rowsPerPage = 12;
 const currentPage = ref(1);
+const filteredValue = ref(null)
 
-const totalPages = computed(() => Math.ceil(props.items.length / rowsPerPage));
+const filteredItems = computed(()=>{
+    if (!filteredValue.value || filteredValue.value === 'Warehouse filter') return props.items
+
+    return props.items.filter(item => item.warehouse_name === filteredValue.value)
+})
+
 const paginatedRows = computed(() => {
     const start = (currentPage.value - 1)*rowsPerPage;
-    return props.items.slice(start, start+rowsPerPage)
+    return filteredItems.value.slice(start, start+rowsPerPage)
+})
+
+const totalPages = computed(() => Math.ceil(filteredItems.value.length / rowsPerPage));
+
+const warehouseOptions = computed(()=> {
+    const names = props.items.map(item => item.warehouse_name)
+    return [...new Set(names)]
 })
 
 function goToPage(page){
@@ -23,7 +37,10 @@ function goToPage(page){
 </script>
 
 <template>
-<nav>
+    <div class="container-flex">
+        <div class="row justify-content-start">
+            <div class="col-flex">
+<nav >
     <ul class="pagination">
         <li class="page-item" :class="{disabled:currentPage === 1}">
             <button class="page-link" @click="goToPage(currentPage - 1)">
@@ -42,12 +59,15 @@ function goToPage(page){
         </li>
     </ul>
 </nav>
-
+</div>
+<DropDown class="col-2" :names="[...new Set(props.items.map(i => i.warehouse_name))]" @update:filter="filteredValue = $event"/>
+</div>
+</div>
     <table class="table" >
     <thead>
         <tr>
             <th scope="col" v-for="name in Object.keys(items[0] || {})" :key="name">
-            {{ name}}
+            {{name}}
             </th>
         </tr>
     </thead>

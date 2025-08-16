@@ -19,7 +19,6 @@ onMounted(async () => {
 try{
   const response = await axios.get("http://109.73.206.144:6969/api/stocks", {params});
   items.value = response.data.data;
-  console.log(response.data.data);
 
 }
 catch(err){

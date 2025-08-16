@@ -6,11 +6,17 @@
 </template>
 
 <script setup>
+// import { useApi } from '@/composables/useApi'
+// import DataTable from '@/components/DataTable.vue'
+
+// const {items,loading,error,get} = useApi()
+// get("sales", { "dateFrom": "2025-04-04" , "dateTo": "2025-05-04","page": 1, "key": "E6kUTYrYwZq2tN4QEtyzsbEBk3ie", "limit":50})
+
 import axios from 'axios';
 import { onMounted,ref } from 'vue';
 import DataTable from '@/components/DataTable.vue';
 
-const items = ref([]);
+const items = ref([])
 
 
 onMounted(async () => {
