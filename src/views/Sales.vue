@@ -1,28 +1,29 @@
 <script setup>
-import axios from 'axios'
-import { onMounted,ref } from 'vue'
-import DataTable from '@/components/DataTable.vue'
-import Histogram from '@/components/Histogram.vue'
-const baseUrl = import.meta.env.VITE_API_BASE_URL
-const apiKey = import.meta.env.VITE_API_KEY
+import { onMounted,ref } from "vue"
+import DataTable from "@/components/DataTable.vue"
+import Histogram from "@/components/Histogram.vue"
+import { getSales } from "@/api"
 
 const items = ref([])
+const loading = ref(true)
 
-onMounted(async () => {
-  const params = { "dateFrom": "2025-04-01" , "dateTo": "2025-05-01","page": 1, "key": apiKey, "limit":50}
-
-try{
-  const response = await axios.get(`${baseUrl}/api/sales`, {params})
-  items.value = response.data.data;
-}
-catch(err){
-  console.log(err)
-}
+onMounted(async() =>{
+  try{
+    const response = await getSales()
+    items.value = response.data.data
+  }
+  catch(err){
+    console.log("Fetch error:", err)
+  }
+  finally{
+    loading.value = false
+  }
 })
 </script>
 
 <template>
-  <div class="container-fluid">
+  <h2 v-if="loading">Loading...</h2>
+  <div v-else class="container-fluid">
     <h1>Sales</h1>
     <Histogram :items="items"/>
     <DataTable :items="items"/>
