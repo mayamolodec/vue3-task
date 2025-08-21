@@ -1,5 +1,5 @@
 # vue3-task 
-Project address:  https://mayamolodec.github.io/vue3-task/
+Project address:  https://vue3-task-8bb6eb.netlify.app/
 ## EN
 This is a test **vue3** task. It has 4 pages: `Sales`, `Incomes`, `Ordes` and `Stocks`. The last one has slightly different query params.
 Each page shows first 50 positions `limit:50` for 1 month (from `2025-04-01` to `2025-05-01`).
