@@ -18,9 +18,9 @@ const api = axios.create({
 const commonParams = { "dateFrom": "2025-04-01" , "dateTo": "2025-05-01","page": 1, "key": apiKey, "limit":50}
 const stocks_params = { "dateFrom": date ,"page": 1, "key": apiKey, "limit":50}
 
-export const getIncomes = () => api.get("/api/incomes", {params:commonParams})
-export const getSales = () => api.get("/api/sales", {params:commonParams})
-export const getOrders = () => api.get("/api/orders", {params:commonParams})
-export const getStocks = () => api.get("/api/stocks", {params:stocks_params})
+export const getIncomes = () => api.get("/incomes", {params:commonParams})
+export const getSales = () => api.get("/sales", {params:commonParams})
+export const getOrders = () => api.get("/orders", {params:commonParams})
+export const getStocks = () => api.get("/stocks", {params:stocks_params})
 
 export default api
