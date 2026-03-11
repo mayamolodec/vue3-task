@@ -1,16 +1,26 @@
 <script setup>
-import { onMounted,ref } from "vue"
+import {ref, watch} from "vue"
 import DataTable from "@/components/DataTable.vue"
-import Histogram from "@/components/Histogram.vue"
 import { getIncomes } from "@/api"
 
 const items = ref([])
+const total = ref()
+const page = ref(1)
+const limit = ref(8)
 const loading = ref(true)
+const staticParams = { "dateFrom": "2025-04-01" , "dateTo": "2025-05-01"}
 
-onMounted(async() =>{
+async function fetchData(){
   try{
-    const response = await getIncomes()
+    const response = await getIncomes({...staticParams,
+      page: page.value,
+      limit: limit.value,
+    })
+
     items.value = response.data.data
+    total.value = response.data.meta.total
+
+    console.log(data.meta)
   }
   catch(err){
     console.log("Fetch error:", err)
@@ -18,14 +28,19 @@ onMounted(async() =>{
   finally{
     loading.value = false
   }
-})
+}
+
+watch(page, fetchData, { immediate: true })
+
+function handlePageChange(p) {
+  page.value = p
+}
 </script>
 
 <template>
   <h2 v-if="loading">Loading...</h2>
   <div v-else class="container-fluid">
     <h1>Incomes</h1>
-    <Histogram :items="items"/>
-    <DataTable :items="items"/>
+    <DataTable :items="items" :page="page" :limit="limit" :total="total" @page-change="handlePageChange" />
   </div>
 </template>
